@@ -1,14 +1,90 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/release/' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
-mainClassName = 'App'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
-dependencies {
-    compile 'com.google.guava:guava:23.0'
-    testCompile 'junit:junit:4.12'
-}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenCentral()
+    maven { url 'https://repo.spring.io/release/' }
+}
+
+ext {
+    lib = [
+            springBoot: [
+                    'org.springframework.boot:spring-boot-starter-web',
+//                    'org.springframework.boot:spring-boot-starter-data-jpa',
+                    'org.springframework.boot:spring-boot-starter-validation',
+                    'org.springframework.boot:spring-boot-starter-actuator',
+                    'org.springframework.security:spring-security-web',
+                    'org.springframework.security:spring-security-config'
+            ],
+            springCloud : [
+                    'org.springframework.cloud:spring-cloud-starter-openfeign',
+                    'org.springframework.cloud:spring-cloud-starter-netflix-hystrix',
+                    'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard'
+//                    'io.github.openfeign:feign-core:10.1.0',
+//                    'io.github.openfeign:feign-jackson:10.1.0',
+//                    'io.github.openfeign.form:feign-form:3.5.0',
+            ],
+            db        : [
+                    'mysql:mysql-connector-java',
+                    'org.flywaydb:flyway-core:5.2.4'
+            ],
+            commons   : [
+                    'commons-lang:commons-lang:2.6',
+                    'commons-io:commons-io:2.6'
+            ],
+            utils     : [
+                    'com.google.guava:guava:27.0.1-jre',
+                    'org.modelmapper:modelmapper:2.3.0'
+            ],
+            basicTest : [
+                    'org.junit.jupiter:junit-jupiter-api',
+                    'org.junit.jupiter:junit-jupiter-params',
+                    'org.junit.jupiter:junit-jupiter-engine',
+                    "org.mockito:mockito-core:${mokitoVersion}",
+                    "org.mockito:mockito-junit-jupiter:${mokitoVersion}",
+            ],
+            integTest : [
+                    'org.springframework.boot:spring-boot-starter-test',
+                    'io.rest-assured:rest-assured:3.2.0',
+                    'io.rest-assured:spring-mock-mvc:3.2.0'
+            ],
+            dbTest    : [
+                    'com.h2database:h2:1.4.199'
+            ],
+            swagger   : [
+                    'io.springfox:springfox-swagger2:2.9.2',
+                    'io.springfox:springfox-swagger-ui:2.9.2'
+            ]
+    ]
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.junit:junit-bom:${junitVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    implementation lib.springBoot, lib.springCloud, lib.db, lib.utils, lib.commons, lib.swagger
+    testImplementation lib.basicTest, lib.integTest, lib.dbTest
+}
+
+test {
+    useJUnitPlatform()
 }
