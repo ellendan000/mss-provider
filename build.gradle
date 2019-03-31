@@ -12,9 +12,15 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'pmd'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+pmd {
+    toolVersion = "6.8.0"
+    ruleSetFiles = files('config/pmd-ruleSets.xml')
+}
 
 repositories {
     mavenCentral()

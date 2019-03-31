@@ -1,14 +1,25 @@
 pipeline {
-    agent { 
-        docker {
-            image 'gradle:5.3.0-jdk8' 
-            args '-m 300M --memory-swap=1g'
-        }
-    }
+    agent any
     stages {
+        stage('pmd') {
+            steps {
+                sh 'gradle pmdMain pmdTest -q'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'gradle clean test'
+            }
+        }
         stage('build') {
             steps {
                 sh 'gradle clean build --info'
+            }
+        }
+
+        post {
+            always {
+                junit 'build/reports/**/*.xml'
             }
         }
     }
