@@ -8,3 +8,5 @@ build/
 *.iml
 *.ipr
 *.iws
+
+*/*-local.yaml

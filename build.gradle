@@ -88,6 +88,9 @@ dependencyManagement {
 }
 
 dependencies {
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
     implementation lib.springBoot, lib.springCloud, lib.db, lib.utils, lib.commons, lib.swagger
     testImplementation lib.basicTest, lib.integTest, lib.dbTest
 }
@@ -99,8 +102,24 @@ test {
 jacoco {
     toolVersion = "0.8.2"
 }
-test.finalizedBy jacocoTestCoverageVerification, jacocoTestReport
+
+test.finalizedBy jacocoTestReport
+jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+
+def classFiles = { classDirectories ->
+    files(classDirectories.files.collect {
+        fileTree(dir: it, exclude: [
+                'com/shadow/mss/provider/**/exception/*',
+                'com/shadow/mss/provider/**/constant/*',
+                'com/shadow/mss/provider/**/configuration/*',
+                'com/shadow/mss/provider/**/advice/*'
+        ])
+    })
+}
 jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories = classFiles(classDirectories)
+    }
     violationRules {
         rule {
             limit {
@@ -117,5 +136,11 @@ jacocoTestCoverageVerification {
                 minimum = 0.95
             }
         }
+    }
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = classFiles(classDirectories)
     }
 }
