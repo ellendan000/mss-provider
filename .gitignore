@@ -9,4 +9,4 @@ build/
 *.ipr
 *.iws
 
-*/*-local.yaml
+**/*-local.yaml

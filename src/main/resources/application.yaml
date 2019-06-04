@@ -2,7 +2,7 @@ spring:
   datasource:
     name: mss_provider
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/mss_provider
+    url: jdbc:mysql://mysql:3306/mss
     username: root
     password:
     tomcat:
@@ -15,3 +15,7 @@ spring:
       min-idle: 5
   flyway:
     enabled: true
+management:
+  endpoint:
+    health:
+      show-details: always
