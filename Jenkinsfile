@@ -6,19 +6,28 @@ pipeline {
         }
     }
     stages {
-        stage('pmd') {
+        stage('Pmd') {
             steps {
                 sh 'gradle pmdMain pmdTest -q'
             }
         }
-        stage('test') {
+        stage('Test') {
             steps {
                 sh 'gradle clean test'
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
                 sh 'gradle clean build --info'
+            }
+        }
+        stage('Dockerize') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: '2bb1efed-9b18-49cb-b2a9-ceb831ccf74f', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                    sh 'docker login -u ${user} -p ${pass} '
+                }
+                sh 'docker build -t shadowpluto/mss --no-cache .'
+                sh 'docker push shadowpluto/mss'
             }
         }
     }
