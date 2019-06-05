@@ -12,6 +12,8 @@
         <exclude name="BeanMembersShouldSerialize"/>
         <exclude name="DataflowAnomalyAnalysis"/>
         <exclude name="SimpleDateFormatNeedsLocale"/>
+        <exclude name="MissingSerialVersionUID"/>
+        <exclude name="BeanMembersShouldSerialize"/>
     </rule>
 
     <rule ref="category/java/multithreading.xml"/>

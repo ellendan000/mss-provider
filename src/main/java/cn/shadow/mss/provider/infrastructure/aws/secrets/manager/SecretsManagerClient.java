@@ -34,7 +34,7 @@ public class SecretsManagerClient {
                     .readValue(secretString, RDSSecret.class);
         } catch (IOException e) {
             log.warn("secretString format is not match rdsSecret class", e);
-            throw new GetSecretValueException();
+            throw new GetSecretValueException(e);
         }
     }
 
@@ -47,13 +47,13 @@ public class SecretsManagerClient {
             getSecretValueResult = client.getSecretValue(getSecretValueRequest);
         } catch (Exception e) {
             log.warn("secret manager get value failed:", e);
-            throw e;
+            throw new GetSecretValueException(e);
         }
 
-        if (getSecretValueResult.getSecretString() != null) {
-            return getSecretValueResult.getSecretString();
-        } else {
+        if (getSecretValueResult.getSecretString() == null) {
             return new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
+        } else {
+            return getSecretValueResult.getSecretString();
         }
     }
 }
