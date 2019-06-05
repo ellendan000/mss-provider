@@ -23,6 +23,7 @@ targetCompatibility = 1.8
 pmd {
     toolVersion = "6.8.0"
     ruleSetFiles = files('config/pmd-ruleSets.xml')
+    ruleSets = []
 }
 
 repositories {
