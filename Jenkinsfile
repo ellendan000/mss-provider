@@ -5,6 +5,9 @@ pipeline {
             args '-v /tmp/gradle-caches:/home/gradle/.gradle/caches'
         }
     }
+    environment {
+        PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
+    }
     stages {
         stage('Pmd') {
             steps {
