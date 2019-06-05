@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Pmd') {
             steps {
-                sh 'gradle pmdMain pmdTest -q'
+                sh 'gradle pmdMain pmdTest'
             }
         }
         stage('Test') {
