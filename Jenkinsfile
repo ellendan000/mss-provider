@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'gradle:5.3.0-jdk8'
-            args '-v /tmp/gradle-caches:/home/gradle/.gradle/caches'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     environment {
