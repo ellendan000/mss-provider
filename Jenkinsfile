@@ -26,6 +26,7 @@ pipeline {
         }
         stage('Dockerize') {
             steps {
+                sh 'which docker'
                 withCredentials([usernamePassword(credentialsId: '2bb1efed-9b18-49cb-b2a9-ceb831ccf74f', passwordVariable: 'pass', usernameVariable: 'user')]) {
                     sh 'docker login -u ${user} -p ${pass} '
                 }
