@@ -2,6 +2,6 @@ spring:
   datasource:
     name: mss-provider
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mss-provider
+    url: jdbc:mysql://localhost:3306/mss
     username: root
     password:

@@ -32,50 +32,53 @@ repositories {
 
 ext {
     lib = [
-            springBoot: [
+            springBoot : [
                     'org.springframework.boot:spring-boot-starter-web',
                     'org.springframework.boot:spring-boot-starter-data-jpa',
                     'org.springframework.boot:spring-boot-starter-validation',
                     'org.springframework.boot:spring-boot-starter-actuator',
-                    'org.springframework.security:spring-security-web',
-                    'org.springframework.security:spring-security-config'
+                    'org.springframework.boot:spring-boot-starter-security',
             ],
-            springCloud : [
+            springCloud: [
                     'org.springframework.cloud:spring-cloud-starter-openfeign',
                     'org.springframework.cloud:spring-cloud-starter-netflix-hystrix',
                     'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard',
                     'io.github.openfeign.form:feign-form:3.5.0',
             ],
-            db        : [
+            db         : [
                     'mysql:mysql-connector-java',
-                    'org.flywaydb:flyway-core:5.2.4'
+                    'org.flywaydb:flyway-core:5.2.4',
+                    'org.apache.tomcat:tomcat-jdbc:9.0.20'
             ],
-            commons   : [
+            commons    : [
                     'commons-lang:commons-lang:2.6',
                     'commons-io:commons-io:2.6'
             ],
-            utils     : [
+            utils      : [
                     'com.google.guava:guava:27.0.1-jre',
                     'org.modelmapper:modelmapper:2.3.0'
             ],
-            basicTest : [
+            basicTest  : [
                     'org.junit.jupiter:junit-jupiter-api',
                     'org.junit.jupiter:junit-jupiter-params',
                     'org.junit.jupiter:junit-jupiter-engine',
                     "org.mockito:mockito-core:${mokitoVersion}",
                     "org.mockito:mockito-junit-jupiter:${mokitoVersion}",
             ],
-            integTest : [
+            integTest  : [
                     'org.springframework.boot:spring-boot-starter-test',
                     'io.rest-assured:rest-assured:3.2.0',
                     'io.rest-assured:spring-mock-mvc:3.2.0'
             ],
-            dbTest    : [
+            dbTest     : [
                     'com.h2database:h2:1.4.199'
             ],
-            swagger   : [
+            swagger    : [
                     'io.springfox:springfox-swagger2:2.9.2',
                     'io.springfox:springfox-swagger-ui:2.9.2'
+            ],
+            aws        : [
+                    'com.amazonaws:aws-java-sdk-secretsmanager'
             ]
     ]
 }
@@ -84,6 +87,7 @@ dependencyManagement {
     imports {
         mavenBom "org.junit:junit-bom:${junitVersion}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "com.amazonaws:aws-java-sdk-bom:${awsSDKVersion}"
     }
 }
 
@@ -91,7 +95,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-    implementation lib.springBoot, lib.springCloud, lib.db, lib.utils, lib.commons, lib.swagger
+    implementation lib.springBoot, lib.springCloud, lib.db, lib.utils, lib.commons, lib.swagger, lib.aws
     testImplementation lib.basicTest, lib.integTest, lib.dbTest
 }
 

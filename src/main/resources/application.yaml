@@ -19,3 +19,9 @@ management:
   endpoint:
     health:
       show-details: always
+
+aws:
+  region: ${AWS_DEFAULT_REGION}
+  secrets-manager:
+    enabled: true
+    mysql-secret-name: rds/mysql/mss
