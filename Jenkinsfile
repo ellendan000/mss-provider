@@ -45,6 +45,7 @@ pipeline {
                 }
                 sh 'docker build -t shadowpluto/mss --no-cache .'
                 sh 'docker push shadowpluto/mss'
+                sh 'docker rmi shadowpluto/mss'
             }
         }
     }
