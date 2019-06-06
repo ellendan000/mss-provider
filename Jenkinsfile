@@ -1,4 +1,5 @@
 pipeline {
+    agent none
     environment {
         PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
     }
