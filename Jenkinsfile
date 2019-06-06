@@ -11,7 +11,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'gradle pmdMain pmdTest'
+                sh 'gradle pmdMain pmdTest --info'
             }
         }
         stage('Test') {
