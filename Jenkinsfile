@@ -8,6 +8,7 @@ pipeline {
             agent {
                 docker {
                     image 'gradle:5.3.0-jdk8'
+                    args '-v /tmp/gradle-caches:/home/gradle/.gradle/caches'
                 }
             }
             steps {
@@ -18,6 +19,7 @@ pipeline {
             agent {
                 docker {
                     image 'gradle:5.3.0-jdk8'
+                    args '-v /tmp/gradle-caches:/home/gradle/.gradle/caches'
                 }
             }
             steps {
@@ -28,6 +30,7 @@ pipeline {
             agent {
                 docker {
                     image 'gradle:5.3.0-jdk8'
+                    args '-v /tmp/gradle-caches:/home/gradle/.gradle/caches'
                 }
             }
             steps {
