@@ -20,6 +20,7 @@
     <rule ref="category/java/bestpractices.xml">
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <exclude name="JUnitTestsShouldIncludeAssert"/>
     </rule>
     <rule ref="category/java/design.xml">
         <exclude name="LawOfDemeter"/>
@@ -39,6 +40,14 @@
         <exclude name="ShortVariable"/>
         <exclude name="CallSuperInConstructor"/>
         <exclude name="MethodNamingConventions"/>
+        <exclude name="DefaultPackage" />
+        <exclude name="CommentDefaultAccessModifier" />
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/ShortClassName">
+        <properties>
+            <property name="minimum" value="2"/>
+        </properties>
     </rule>
 
 </ruleset>

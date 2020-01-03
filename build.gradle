@@ -8,13 +8,17 @@ buildscript {
 //        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
     }
 }
-
+plugins {
+    id 'net.ltgt.apt' version '0.20'
+}
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
+apply plugin: 'net.ltgt.apt'
+apply plugin: 'net.ltgt.apt-idea'
 //apply plugin: 'org.sonarqube'
 
 sourceCompatibility = 1.8
@@ -49,7 +53,7 @@ ext {
             ],
             db         : [
                     'mysql:mysql-connector-java',
-                    'org.flywaydb:flyway-core:5.2.4',
+                    'org.flywaydb:flyway-core',
                     'org.apache.tomcat:tomcat-jdbc:9.0.20'
             ],
             commons    : [
@@ -96,9 +100,21 @@ dependencyManagement {
 dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    implementation "org.mapstruct:mapstruct-jdk8:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     implementation lib.springBoot, lib.springCloud, lib.db, lib.utils, lib.commons, lib.swagger, lib.aws
     testImplementation lib.basicTest, lib.integTest, lib.dbTest
+}
+
+sourceSets {
+    test {
+        java.srcDirs file('src/test/java'), file('src/test-integration/java')
+        resources.srcDirs file('src/test/resources'), file('src/test-integration/resources')
+    }
 }
 
 test {
@@ -115,10 +131,12 @@ jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 def classFiles = { classDirectories ->
     files(classDirectories.files.collect {
         fileTree(dir: it, exclude: [
-                'com/shadow/mss/provider/**/exception/*',
-                'com/shadow/mss/provider/**/constant/*',
-                'com/shadow/mss/provider/**/configuration/*',
-                'com/shadow/mss/provider/**/advice/*'
+                'cn/shadow/mss/provider/**/exception/*',
+                'cn/shadow/mss/provider/**/constant/*',
+                'cn/shadow/mss/provider/**/configuration/*',
+                'cn/shadow/mss/provider/**/advice/*',
+                'cn/shadow/mss/provider/**/*MapperImpl*',
+                'cn/shadow/mss/provider/infrastructure/aws/secrets/manager/*',
         ])
     })
 }
