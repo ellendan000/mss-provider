@@ -52,6 +52,9 @@ ext {
     ]
 }
 
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
 dependencyManagement {
     imports {
         mavenBom "org.junit:junit-bom:${junitVersion}"
