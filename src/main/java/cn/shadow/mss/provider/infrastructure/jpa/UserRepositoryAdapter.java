@@ -10,11 +10,10 @@ import org.springframework.stereotype.Repository;
 public class UserRepositoryAdapter implements UserRepository {
 
     private final UserJPARepository jpaRepository;
-    private final UserMapper userMapper;
+    private final UserMapper userMapper = UserMapper.INSTANCE;
 
-    public UserRepositoryAdapter(UserJPARepository jpaRepository, UserMapper userMapper) {
+    public UserRepositoryAdapter(UserJPARepository jpaRepository) {
         this.jpaRepository = jpaRepository;
-        this.userMapper = userMapper;
     }
 
     @Override
