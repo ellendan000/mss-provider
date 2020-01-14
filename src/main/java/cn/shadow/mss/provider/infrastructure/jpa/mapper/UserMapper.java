@@ -16,11 +16,9 @@ import java.util.List;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mappings({
-      @Mapping(target = "realName", source = "bid.realName"),
-      @Mapping(target = "identificationNumber", source = "bid.cardNumber"),
-      @Mapping(target = "mobileNumber", source = "contactInfo.mobileNumber")
-    })
+    @Mapping(target = "realName", source = "bid.realName")
+    @Mapping(target = "identificationNumber", source = "bid.cardNumber")
+    @Mapping(target = "mobileNumber", source = "contactInfo.mobileNumber")
     UserPO toUserPO(User user);
 
     @InheritInverseConfiguration

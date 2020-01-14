@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "account")
 public class AccountPO {
+    @Id
     private String bid;
     private Double amount;
 }

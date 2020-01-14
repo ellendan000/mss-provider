@@ -14,6 +14,7 @@ import java.util.List;
 @Table(name = "user")
 public class UserPO {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
 
     @Column(name = "real_name")
