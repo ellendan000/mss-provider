@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class UserRepositoryAdapter implements UserRepository {
 
     private final UserJPARepository jpaRepository;
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+    private static final UserMapper USER_MAPPER = UserMapper.INSTANCE;
 
     public UserRepositoryAdapter(UserJPARepository jpaRepository) {
         this.jpaRepository = jpaRepository;
@@ -18,7 +18,7 @@ public class UserRepositoryAdapter implements UserRepository {
 
     @Override
     public User createUser(User user) {
-        UserPO userPO = userMapper.toUserPO(user);
-        return userMapper.toUser(jpaRepository.save(userPO));
+        UserPO userPO = USER_MAPPER.toUserPO(user);
+        return USER_MAPPER.toUser(jpaRepository.save(userPO));
     }
 }
