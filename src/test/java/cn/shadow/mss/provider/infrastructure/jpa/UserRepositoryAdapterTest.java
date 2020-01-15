@@ -25,7 +25,7 @@ class UserRepositoryAdapterTest {
 
     @BeforeEach
     void setUp() {
-        userRepositoryAdapter = new UserRepositoryAdapter(jpaRepository, UserMapper.INSTANCE);
+        userRepositoryAdapter = new UserRepositoryAdapter(jpaRepository);
         when(jpaRepository.save(any(UserPO.class))).thenAnswer(i -> i.getArgument(0));
     }
 

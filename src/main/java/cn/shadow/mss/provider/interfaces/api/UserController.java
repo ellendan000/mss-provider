@@ -6,6 +6,7 @@ import cn.shadow.mss.provider.interfaces.mapper.CreateUserMapper;
 import cn.shadow.mss.provider.interfaces.request.CreateUserRequest;
 import cn.shadow.mss.provider.interfaces.response.UserCreatedResponse;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserCreatedResponse createUser(CreateUserRequest request) {
+    public UserCreatedResponse createUser(@RequestBody CreateUserRequest request) {
         UserCreatedDTO dto = userService.createUser(CreateUserMapper.INSTANCE.requestToCommand(request));
         return CreateUserMapper.INSTANCE.dtoToResponse(dto);
     }
